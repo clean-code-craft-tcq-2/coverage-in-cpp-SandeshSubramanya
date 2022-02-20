@@ -49,27 +49,6 @@ void checkAndAlert(
   }
 }
 
-void sendToController(BreachType breachType) {
-  const unsigned short header = 0xfeed;
-  printf("%x : %x\n", header, breachType);
-}
-
-void sendToEmail(BreachType breachType) {
-  const char* recepient = "a.b@c.com";
-  switch(breachType) {
-    case TOO_LOW:
-      printf("To: %s\n", recepient);
-      printf("Hi, the temperature is too low\n");
-      break;
-    case TOO_HIGH:
-      printf("To: %s\n", recepient);
-      printf("Hi, the temperature is too high\n");
-      break;
-    case NORMAL:
-      break;
-  }
-}
-
 ---------------------------------------------------------------*/
 
 #include <iostream>
@@ -117,13 +96,16 @@ class ICoolingTypeStrategy  // I-> interface
   protected:
   int lower_limit; // each cooling type will have its own upper limit and lower limit
   int upper_limit;
-  AlertTarget eAlertTarget;
   
   public:
   virtual void setAltertTarget(AlertTarget eAlertTarget) = 0;
   virtual BreachType inferBreach (double value, double lowerLimit, double upperLimit) = 0;
 };
 
+
+
+// client interface
+// client has to know only strategy + the alter target type + value
 
 class Context
 {
@@ -146,16 +128,33 @@ class Context
 
 class tclPassiveCooling : public ICoolingTypeStrategy
 {
-
+   private:
+   AlertTarget *poAlertTarget;
+   
    public:
    tclPassiveCooling()
    {
        lower_limit = 20;
        upper_limit = 0;
+       poAlertTarget = NULL;
    }
    virtual void setAltertTarget(AlertTarget oAlertTarget)
    {
-       eAlertTarget = oAlertTarget;
+       poAlertTarget = &oAlertTarget;
+   }
+   virtual BreachType inferBreach (double value, double lowerLimit, double upperLimit)
+   {
+        if(value < lowerLimit) 
+        {
+            return TOO_LOW;
+        }
+        if(value > upperLimit) 
+        {
+            return TOO_HIGH;
+        }
+        return NORMAL;
    }
 };
+
+
 
