@@ -1,7 +1,7 @@
 #include "typewise-alert.h"
 #include <stdio.h>
 
-BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
+/*BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   if(value < lowerLimit) {
     return TOO_LOW;
   }
@@ -69,3 +69,56 @@ void sendToEmail(BreachType breachType) {
       break;
   }
 }
+
+---------------------------------------------------------------*/
+
+#include <iostream>
+using namespace std;
+
+class ICoolingTypeStrategy  // I-> interface
+{
+  // each cooling type will have its own upper limit and lower limit
+  protected:
+  int lower_limit; 
+  int upper_limit;
+  AlertTarget eAlertTarget;
+  
+  public:
+  virtual void setAltertTarget(AlertTarget eAlertTarget) = 0;
+  virtual BreachType inferBreach (double value, double lowerLimit, double upperLimit) = 0;
+};
+
+class Context
+{
+    private:
+    ICoolingTypeStrategy *strategy_coolingtype;
+    
+    public:
+    Context(AlertTarget oAlertTarget, ICoolingTypeStrategy *strategy_cooling = nullptr) : strategy_coolingtype(strategy_cooling)
+    {
+        //set alert type set by the user
+        strategy_coolingtype ->setAltertTarget(oAlertTarget);
+    }
+    
+    ~Context()
+    {
+        delete this->strategy_coolingtype;
+    }
+};
+
+class tclPassiveCooling : public ICoolingTypeStrategy
+{
+   public:
+   tclPassiveCooling()
+   {
+       lower_limit = 20;
+       upper_limit = 0;
+   }
+   virtual void setAltertTarget(AlertTarget oAlertTarget)
+   {
+       eAlertTarget = oAlertTarget;
+   }
+};
+
+
+
