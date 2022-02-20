@@ -75,11 +75,47 @@ void sendToEmail(BreachType breachType) {
 #include <iostream>
 using namespace std;
 
+class tclIAlterTarget      //  I-> interface
+{
+  public:
+  virtual void vSend(BreachType oBreachType) = 0;
+};
+
+class tclEmail : public tclIAlterTarget    // tcl-> type class
+{
+    virtual void vSend(BreachType oBreachType)
+    {
+        const char* recepient = "a.b@c.com";
+        switch(oBreachType) {
+        case BreachType::TOO_LOW :
+            printf("To: %s\n", recepient);
+            printf("Hi, the temperature is too low\n");
+            break;
+        case BreachType::TOO_HIGH:
+            printf("To: %s\n", recepient);
+            printf("Hi, the temperature is too high\n");
+            break;
+        case BreachType::NORMAL:
+            break;
+        }
+    }
+};
+
+class tclController: public tclIAlterTarget
+{
+    public:
+    virtual void vSend(BreachType oBreachType)
+    {
+        const unsigned short header = 0xfeed;
+        printf("%x : %x\n", header, oBreachType);
+    }
+};
+
 class ICoolingTypeStrategy  // I-> interface
 {
-  // each cooling type will have its own upper limit and lower limit
+    
   protected:
-  int lower_limit; 
+  int lower_limit; // each cooling type will have its own upper limit and lower limit
   int upper_limit;
   AlertTarget eAlertTarget;
   
@@ -87,6 +123,7 @@ class ICoolingTypeStrategy  // I-> interface
   virtual void setAltertTarget(AlertTarget eAlertTarget) = 0;
   virtual BreachType inferBreach (double value, double lowerLimit, double upperLimit) = 0;
 };
+
 
 class Context
 {
@@ -106,8 +143,10 @@ class Context
     }
 };
 
+
 class tclPassiveCooling : public ICoolingTypeStrategy
 {
+
    public:
    tclPassiveCooling()
    {
@@ -119,6 +158,4 @@ class tclPassiveCooling : public ICoolingTypeStrategy
        eAlertTarget = oAlertTarget;
    }
 };
-
-
 
