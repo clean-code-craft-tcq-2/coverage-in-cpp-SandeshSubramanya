@@ -118,10 +118,15 @@ class Context
         //set alert type set by the user
         strategy_coolingtype ->setAltertTarget(oAlertTarget);
     }
-    
+   
     ~Context()
     {
         delete this->strategy_coolingtype;
+    }
+  
+    BreachType inferBreach (double temp_value, double lowerLimit, double upperLimit)
+    {
+      return (strategy_coolingtype -> inferBreach (value, lowerlimit, upperlimit));
     }
 };
 
@@ -134,9 +139,14 @@ class tclPassiveCooling : public ICoolingTypeStrategy
    public:
    tclPassiveCooling()
    {
-       lower_limit = 20;
-       upper_limit = 0;
+       lower_limit = 0;
+       upper_limit = 45;
        poAlertTarget = NULL;
+   }
+   ~tclPassiveCooling()
+   {
+     delete poAlertTarget;
+     poAlertTarget = NULL;
    }
    virtual void setAltertTarget(AlertTarget oAlertTarget)
    {
@@ -144,15 +154,15 @@ class tclPassiveCooling : public ICoolingTypeStrategy
    }
    virtual BreachType inferBreach (double value, double lowerLimit, double upperLimit)
    {
-        if(value < lowerLimit) 
+        if(value < lower_limit) 
         {
-            return TOO_LOW;
+            return BreachType::TOO_LOW;
         }
-        if(value > upperLimit) 
+        if(value > upper_limit) 
         {
-            return TOO_HIGH;
+            return BreachType::TOO_HIGH;
         }
-        return NORMAL;
+        return BreachType::NORMAL;
    }
 };
 
