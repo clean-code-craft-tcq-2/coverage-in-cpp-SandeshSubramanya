@@ -25,8 +25,21 @@ typedef struct {
   char brand[48];
 } BatteryCharacter;
 
-void checkAndAlert(
-  AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
+// structure to store information on a particular cooling type
+struct stCoolingTypeInfo  // st ->Structure
+{
+   CoolingType m_coolingType;
+   int m_lowerLimit;
+   int m_upperLimit;
+   stCoolingTypeInfo(CoolingType oCoolingType, int lowerLimit,int upperLimit)
+   : m_coolingType(oCoolingType)
+   , m_lowerLimit(lowerLimit)
+   , m_upperLimit(upperLimit)
+   {
+   } 
+};
 
+//functions
+void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
 void sendToController(BreachType breachType);
 void sendToEmail(BreachType breachType);
