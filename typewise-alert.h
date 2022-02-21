@@ -43,7 +43,7 @@ struct stCoolingTypeInfo  // st ->Structure
 };
 
 // creator a vector of stCoolingTypeInfo.
-std::vector<stCoolingTypeInfo> oVectorCoolingTypeInfo {
+static std::vector<stCoolingTypeInfo> oVectorCoolingTypeInfo {
     stCoolingTypeInfo(CoolingType::PASSIVE_COOLING,0,35),
     stCoolingTypeInfo(CoolingType::HI_ACTIVE_COOLING,0,45),
     stCoolingTypeInfo(CoolingType::MED_ACTIVE_COOLING,0,40),
