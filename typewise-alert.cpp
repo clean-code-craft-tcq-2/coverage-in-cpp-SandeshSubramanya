@@ -1,58 +1,43 @@
 #include "typewise-alert.h"
 #include <stdio.h>
+#include <iostream>
+using namespace std;
 
-/*BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
-  if(value < lowerLimit) {
+/*typedef enum {
+  PASSIVE_COOLING,
+  HI_ACTIVE_COOLING,
+  MED_ACTIVE_COOLING
+} CoolingType;
+
+typedef enum {
+  NORMAL,
+  TOO_LOW,
+  TOO_HIGH
+} BreachType;
+
+
+typedef enum {
+  TO_CONTROLLER,
+  TO_EMAIL
+} AlertTarget;
+
+typedef struct {
+  CoolingType coolingType;
+  char brand[48];
+} BatteryCharacter; */
+
+BreachType inferBreach(double value, double lowerLimit, double upperLimit) 
+{
+  if(value < lowerLimit) 
+  {
     return TOO_LOW;
   }
-  if(value > upperLimit) {
+  if(value > upperLimit) 
+  {
     return TOO_HIGH;
   }
   return NORMAL;
 }
-
-BreachType classifyTemperatureBreach(
-    CoolingType coolingType, double temperatureInC) {
-  int lowerLimit = 0;
-  int upperLimit = 0;
-  switch(coolingType) {
-    case PASSIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 35;
-      break;
-    case HI_ACTIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 45;
-      break;
-    case MED_ACTIVE_COOLING:
-      lowerLimit = 0;
-      upperLimit = 40;
-      break;
-  }
-  return inferBreach(temperatureInC, lowerLimit, upperLimit);
-}
-
-void checkAndAlert(
-    AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) {
-
-  BreachType breachType = classifyTemperatureBreach(
-    batteryChar.coolingType, temperatureInC
-  );
-
-  switch(alertTarget) {
-    case TO_CONTROLLER:
-      sendToController(breachType);
-      break;
-    case TO_EMAIL:
-      sendToEmail(breachType);
-      break;
-  }
-}
-
----------------------------------------------------------------*/
-
-#include <iostream>
-using namespace std;
 
 class tclIAlterTarget      //  I-> interface
 {
@@ -65,7 +50,8 @@ class tclEmail : public tclIAlterTarget    // tcl-> type class
     virtual void vSend(BreachType oBreachType)
     {
         const char* recepient = "a.b@c.com";
-        switch(oBreachType) {
+        switch(oBreachType) 
+        {
         case BreachType::TOO_LOW :
             printf("To: %s\n", recepient);
             printf("Hi, the temperature is too low\n");
@@ -98,14 +84,15 @@ class ICoolingTypeStrategy  // I-> interface
   int upper_limit;
   
   public:
-  virtual void setAltertTarget(AlertTarget eAlertTarget) = 0;
-  virtual BreachType inferBreach (double value, double lowerLimit, double upperLimit) = 0;
+  virtual void setAltertTarget(AlertTarget eAlertTarget) = 0;   //sets the target alert
+  virtual BreachType inferBreach (double value) = 0;
+  virtual void vSendBreachToTargetAlert(BreachType oBreachType) = 0;
 };
 
 
 
 // client interface
-// client has to know only strategy + the alter target type + value
+// client has to know only strategy + the alter target type + temperature value
 
 class Context
 {
@@ -124,12 +111,16 @@ class Context
         delete this->strategy_coolingtype;
     }
   
-    BreachType inferBreach (double temp_value, double lowerLimit, double upperLimit)
+    BreachType inferBreach (double temp_value)
     {
-      return (strategy_coolingtype -> inferBreach (value, lowerlimit, upperlimit));
+      return ( strategy_coolingtype ->inferBreach(temp_value) );
+    }
+    
+    void vSend(BreachType oBreachType)
+    {
+        strategy_coolingtype -> vSendBreachToTargetAlert(oBreachType);
     }
 };
-
 
 class tclPassiveCooling : public ICoolingTypeStrategy
 {
@@ -152,19 +143,16 @@ class tclPassiveCooling : public ICoolingTypeStrategy
    {
        poAlertTarget = &oAlertTarget;
    }
-   virtual BreachType inferBreach (double value, double lowerLimit, double upperLimit)
+   virtual BreachType inferBreach(double value)
    {
-        if(value < lower_limit) 
-        {
-            return BreachType::TOO_LOW;
-        }
-        if(value > upper_limit) 
-        {
-            return BreachType::TOO_HIGH;
-        }
-        return BreachType::NORMAL;
+        return ::inferBreach(value,lower_limit,upper_limit);
+   }
+   void vSendBreachToTargetAlert(BreachType oBreachType)
+   {
+       cout<<"Breached";
    }
 };
+
 
 
 
