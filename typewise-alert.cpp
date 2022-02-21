@@ -1,5 +1,26 @@
 #include "typewise-alert.h"
 #include <stdio.h>
+#include <vector>
+using namespace std;
+
+// creator a vector of stCoolingTypeInfo.
+std::vector<stCoolingTypeInfo> oVectorCoolingTypeInfo {
+    stCoolingTypeInfo(CoolingType::PASSIVE_COOLING,0,35),
+    stCoolingTypeInfo(CoolingType::HI_ACTIVE_COOLING,0,45),
+    stCoolingTypeInfo(CoolingType::MED_ACTIVE_COOLING,0,40),
+};
+
+// returns the given cooling type information.
+stCoolingTypeInfo getCurrentCoolingTypeInfo(CoolingType coolingType)
+{
+  std::vector<stCoolingTypeInfo>::iterator itrCoolingType = oVectorCoolingTypeInfo.begin();
+  for(;itrCoolingType!= oVectorCoolingTypeInfo.end(); ++ itrCoolingType)
+  {
+      if(itrCoolingType->m_coolingType == coolingType)
+            break;
+  }
+  return *itrCoolingType;
+}
 
 BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
   if(value < lowerLimit) {
