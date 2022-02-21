@@ -34,8 +34,9 @@ BreachType inferBreach(double value, double lowerLimit, double upperLimit) {
 
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC) 
 {   
-    stCoolingTypeInfo =  getCurrentCoolingTypeInfo(coolingType);
-    return inferBreach(temperatureInC, stCoolingTypeInfo.m_lowerLimit, stCoolingTypeInfo.m_upperLimit);
+    // get the information of the given cooling type.
+    stCoolingTypeInfo oCoolingTypeInfo = getCurrentCoolingTypeInfo(coolingType);
+    return inferBreach(temperatureInC, oCoolingTypeInfo.m_lowerLimit, oCoolingTypeInfo.m_upperLimit);
 }
 
 void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC) 
