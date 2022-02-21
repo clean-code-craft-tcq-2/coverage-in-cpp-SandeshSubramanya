@@ -49,7 +49,7 @@ class tclEmail : public tclIAlterTarget    // tcl-> type class
 {
     virtual void vSend(BreachType oBreachType)
     {
-        const char* recepient = "a.b@c.com";
+    /*    const char* recepient = "a.b@c.com";
         switch(oBreachType) 
         {
         case BreachType::TOO_LOW :
@@ -63,7 +63,7 @@ class tclEmail : public tclIAlterTarget    // tcl-> type class
         case BreachType::NORMAL:
             break;
         }
-    }
+    }*/
 };
 
 class tclController: public tclIAlterTarget
