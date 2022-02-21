@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+class stCoolingTypeInfo;  //forward declaration
 
 typedef enum {
   PASSIVE_COOLING,
