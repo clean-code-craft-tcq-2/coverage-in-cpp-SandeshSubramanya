@@ -43,5 +43,5 @@ struct stCoolingTypeInfo  // st ->Structure
 void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
 void sendToController(BreachType breachType);
 void sendToEmail(BreachType breachType);
-void vDisplayEmailBreachType(BreachType breachType);
+void vDisplayBreachTypeForEmail(BreachType breachType);
 stCoolingTypeInfo getCurrentCoolingTypeInfo(CoolingType coolingType);
