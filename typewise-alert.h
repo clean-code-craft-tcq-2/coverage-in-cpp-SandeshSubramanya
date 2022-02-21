@@ -42,6 +42,14 @@ struct stCoolingTypeInfo  // st ->Structure
    } 
 };
 
+// creator a vector of stCoolingTypeInfo.
+std::vector<stCoolingTypeInfo> oVectorCoolingTypeInfo {
+    stCoolingTypeInfo(CoolingType::PASSIVE_COOLING,0,35),
+    stCoolingTypeInfo(CoolingType::HI_ACTIVE_COOLING,0,45),
+    stCoolingTypeInfo(CoolingType::MED_ACTIVE_COOLING,0,40),
+};
+
+
 //functions
 void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
 void sendToController(BreachType breachType);
