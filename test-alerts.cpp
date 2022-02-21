@@ -22,7 +22,6 @@ TEST_CASE("Test infers breach according to the limits set to corresponding Cooli
     int lower_limits = oVectorCoolingTypeInfo[count].m_lowerLimit;
     int upper_limits = oVectorCoolingTypeInfo[count].m_upperLimit; 
     REQUIRE(inferBreach((lower_limits-1), lower_limits, upper_limits) == TOO_LOW);
-    REQUIRE(inferBreach((upper_limits-upper_limits), lower_limits, upper_limits) == TOO_LOW);
     REQUIRE(inferBreach((upper_limits-lower_limits), lower_limits, upper_limits) == NORMAL);
     REQUIRE(inferBreach((upper_limits+10), lower_limits, upper_limits) == TOO_HIGH);
   }
