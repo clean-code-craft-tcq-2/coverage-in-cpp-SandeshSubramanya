@@ -4,7 +4,7 @@
 using namespace std;
 
 // creator a vector of stCoolingTypeInfo.
-std::vector<stCoolingTypeInfo> oVectorCoolingTypeInfo {
+static const std::vector<stCoolingTypeInfo> oVectorCoolingTypeInfo {
     stCoolingTypeInfo(CoolingType::PASSIVE_COOLING,0,35),
     stCoolingTypeInfo(CoolingType::HI_ACTIVE_COOLING,0,45),
     stCoolingTypeInfo(CoolingType::MED_ACTIVE_COOLING,0,40),
