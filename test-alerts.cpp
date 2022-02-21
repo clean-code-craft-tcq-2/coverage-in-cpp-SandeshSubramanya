@@ -5,7 +5,9 @@
 
 TEST_CASE("Test infers breach accordingly to the limits") {
   // value, lower_limit, upper_limit
-  REQUIRE(inferBreach(12, 20, 30) == TOO_LOW);
-  REQUIRE(inferBreach(30, 20, 30) == TOO_HIGH);
-  REQUIRE(inferBreach(15, 20, 30) == NORMAL);
+  #define Lower_limit 20
+  #define Upper_limit 30
+  REQUIRE(inferBreach(12, Lower_limit, Upper_limit) == TOO_LOW);
+  REQUIRE(inferBreach(30, Lower_limit, Upper_limit) == TOO_HIGH);
+  REQUIRE(inferBreach(15, Lower_limit, Upper_limit) == NORMAL);
 }
