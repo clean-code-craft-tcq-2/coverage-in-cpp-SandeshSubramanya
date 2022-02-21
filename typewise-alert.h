@@ -7,6 +7,13 @@ typedef enum {
   NUM_OF_COOLINGTYPE
 } CoolingType;
 
+// creator a vector of stCoolingTypeInfo.
+static const std::vector<stCoolingTypeInfo> oVectorCoolingTypeInfo {
+    stCoolingTypeInfo(CoolingType::PASSIVE_COOLING,0,35),
+    stCoolingTypeInfo(CoolingType::HI_ACTIVE_COOLING,0,45),
+    stCoolingTypeInfo(CoolingType::MED_ACTIVE_COOLING,0,40),
+};
+
 typedef enum {
   NORMAL,
   TOO_LOW,
@@ -15,6 +22,7 @@ typedef enum {
 
 BreachType inferBreach(double value, double lowerLimit, double upperLimit);
 BreachType classifyTemperatureBreach(CoolingType coolingType, double temperatureInC);
+
 
 typedef enum {
   TO_CONTROLLER,
@@ -46,3 +54,4 @@ void sendToController(BreachType breachType);
 void sendToEmail(BreachType breachType);
 void vDisplayBreachTypeForEmail(BreachType breachType);
 stCoolingTypeInfo getCurrentCoolingTypeInfo(CoolingType coolingType);
+CoolingType getCoolingTypeAtIndexFromVector(tu32 Index);
