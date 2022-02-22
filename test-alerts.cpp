@@ -29,14 +29,18 @@ TEST_CASE("Test infers breach according to the limits set to corresponding Cooli
 
 TEST_CASE("Test classifyTemperatureBreach for various cooling type defined limits ") 
 {  
-  #define CurrentTemperature = 15 //degrees
+  int CurrentTemperature = 15 //degrees
   for (int count=0 ; count < oVectorCoolingTypeInfo.size(); ++count)
   {
     CoolingType oCurrentCoolingType = oVectorCoolingTypeInfo[count].m_coolingType;
     int lower_limits = oVectorCoolingTypeInfo[count].m_lowerLimit;
     int upper_limits = oVectorCoolingTypeInfo[count].m_upperLimit; 
     REQUIRE(classifyTemperatureBreach(oCurrentCoolingType, (lower_limits-CurrentTemperature)) == TOO_LOW );
-    REQUIRE(classifyTemperatureBreach(oCurrentCoolingType, (upper_limits+CurrentTemperature)) == TOO_HIGH);  
+    REQUIRE(classifyTemperatureBreach(oCurrentCoolingType, (upper_limits+CurrentTemperature)) == TOO_HIGH);
+    if (CurrentTemperature < (upper_limits-lower_limits))
+    {
+      REQUIRE(classifyTemperatureBreach(oCurrentCoolingType, CurrentTemperature)) == NORMAL);
+    }
   }
 }
 
