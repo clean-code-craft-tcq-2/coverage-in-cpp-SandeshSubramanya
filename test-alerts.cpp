@@ -44,4 +44,20 @@ TEST_CASE("Test classifyTemperatureBreach for various cooling type defined limit
   }
 }
 
+TEST_CASE("Test checkAndAlert functionality for various target types and cooling type temperatures ") 
+{
+  int CurrentTemperature = 10;
+  // check for each target type.
+  for (int itargetcount=0 ; itargetcount < (int)(AlertTarget::NUM_ALTERTARGETS)-1; ++itargetcount)
+  {
+    for (int icount=0 ; icount < (int)oVectorCoolingTypeInfo.size(); ++icount)
+    {
+      CoolingType oCurrentCoolingType = oVectorCoolingTypeInfo[icount].m_coolingType;
+      BatteryCharacter oCurrentBatteryCharacter;
+      oCurrentBatteryCharacter.coolingType = oCurrentCoolingType;
+      oCurrentBatteryCharacter.brand = "Nissan";
+      REQUIRE(classifyTemperatureBreach(oCurrentBatteryCharacter, oCurrentCoolingType,(lower_limits-CurrentTemperature)) == TOO_LOW );
+      REQUIRE(classifyTemperatureBreach(oCurrentBatteryCharacter, oCurrentCoolingType,(upper_limits+CurrentTemperature)) == TOO_HIGH);
+  }
+}
 
