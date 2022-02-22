@@ -52,12 +52,13 @@ TEST_CASE("Test checkAndAlert functionality for various target types and cooling
   {
     for (int icount=0 ; icount < (int)oVectorCoolingTypeInfo.size(); ++icount)
     {
+      AlertTarget oCurrentAlertTarget = itargetcount;
       CoolingType oCurrentCoolingType = oVectorCoolingTypeInfo[icount].m_coolingType;
       BatteryCharacter oCurrentBatteryCharacter;
       oCurrentBatteryCharacter.coolingType = oCurrentCoolingType;
       oCurrentBatteryCharacter.brand = "Nissan";
-      REQUIRE(classifyTemperatureBreach(oCurrentBatteryCharacter, oCurrentCoolingType,(lower_limits-CurrentTemperature)) == TOO_LOW );
-      REQUIRE(classifyTemperatureBreach(oCurrentBatteryCharacter, oCurrentCoolingType,(upper_limits+CurrentTemperature)) == TOO_HIGH);
+      REQUIRE(classifyTemperatureBreach(oCurrentAlertTarget,oCurrentBatteryCharacter,(lower_limits-CurrentTemperature)) == TOO_LOW );
+      REQUIRE(classifyTemperatureBreach(oCurrentAlertTarget,oCurrentBatteryCharacter,(upper_limits+CurrentTemperature)) == TOO_HIGH);
   }
 }
 
