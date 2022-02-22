@@ -60,8 +60,8 @@ TEST_CASE("Test checkAndAlert functionality for various target types and cooling
       BatteryCharacter oCurrentBatteryCharacter;
       oCurrentBatteryCharacter.coolingType = oCurrentCoolingType;
       oCurrentBatteryCharacter.brand[] = "Nissan";
-      REQUIRE(checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(lower_limits-CurrentTemperature)));
-      REQUIRE(checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(upper_limits+CurrentTemperature)));
+      checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(lower_limits-CurrentTemperature)));
+      checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(upper_limits+CurrentTemperature)));
     }
   }
 }
