@@ -46,9 +46,9 @@ TEST_CASE("Test classifyTemperatureBreach for various cooling type defined limit
 
 TEST_CASE("Test checkAndAlert functionality for various target types and cooling type temperatures ") 
 {
-  int CurrentTemperature = 10;
+  int CurrentTemperature = 15;
   // check for each target type.
-  int numberofTargets = (int)(AlertTarget::NUM_ALTERTARGETS);
+  int numberofTargets = 2;
   for (int itargetcount=0 ; itargetcount < numberofTargets; ++itargetcount)
   {
     for (int icount=0 ; icount < (int)oVectorCoolingTypeInfo.size(); ++icount)
@@ -61,6 +61,10 @@ TEST_CASE("Test checkAndAlert functionality for various target types and cooling
       oCurrentBatteryCharacter.coolingType = oCurrentCoolingType;
       checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(lower_limits-CurrentTemperature));
       checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(upper_limits+CurrentTemperature));
+      if (CurrentTemperature <= (upper_limits-lower_limits))
+      {
+        checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(CurrentTemperature));
+      }
     }
   }
 }
