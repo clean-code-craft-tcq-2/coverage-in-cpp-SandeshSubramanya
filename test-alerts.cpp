@@ -36,11 +36,7 @@ TEST_CASE("Test classifyTemperatureBreach for various cooling type defined limit
     int lower_limits = oVectorCoolingTypeInfo[count].m_lowerLimit;
     int upper_limits = oVectorCoolingTypeInfo[count].m_upperLimit; 
     REQUIRE(classifyTemperatureBreach(oCurrentCoolingType, (lower_limits-CurrentTemperature)) == TOO_LOW );
-    REQUIRE(classifyTemperatureBreach(oCurrentCoolingType, (upper_limits+CurrentTemperature)) == TOO_HIGH);
-    if(CurrentTemperature < upper_limits && CurrentTemperature > lower_limits)
-    {
-       REQUIRE(classifyTemperatureBreach(oCurrentCoolingType,CurrentTemperature) == NORMAL);
-    }
+    REQUIRE(classifyTemperatureBreach(oCurrentCoolingType, (upper_limits+CurrentTemperature)) == TOO_HIGH);  
   }
 }
 
