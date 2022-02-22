@@ -61,10 +61,7 @@ TEST_CASE("Test checkAndAlert functionality for various target types and cooling
       oCurrentBatteryCharacter.coolingType = oCurrentCoolingType;
       checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(lower_limits-CurrentTemperature));
       checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(upper_limits+CurrentTemperature));
-      if (CurrentTemperature <= (upper_limits-lower_limits))
-      {
-        checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(CurrentTemperature));
-      }
+      checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter, CurrentTemperature);
     }
   }
 }
