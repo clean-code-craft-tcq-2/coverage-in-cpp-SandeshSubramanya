@@ -48,7 +48,8 @@ TEST_CASE("Test checkAndAlert functionality for various target types and cooling
 {
   int CurrentTemperature = 10;
   // check for each target type.
-  for (int itargetcount=0 ; itargetcount < (int)(AlertTarget::NUM_ALTERTARGETS)-1; ++itargetcount)
+  int numberofTargets = (int)(AlertTarget::NUM_ALTERTARGETS);
+  for (int itargetcount=0 ; itargetcount < numberofTargets; ++itargetcount)
   {
     for (int icount=0 ; icount < (int)oVectorCoolingTypeInfo.size(); ++icount)
     {
@@ -59,8 +60,8 @@ TEST_CASE("Test checkAndAlert functionality for various target types and cooling
       BatteryCharacter oCurrentBatteryCharacter;
       oCurrentBatteryCharacter.coolingType = oCurrentCoolingType;
       oCurrentBatteryCharacter.brand[] = "Nissan";
-      REQUIRE(checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(lower_limits-CurrentTemperature)) == TOO_LOW );
-      REQUIRE(checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(upper_limits+CurrentTemperature)) == TOO_HIGH);
+      REQUIRE(checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(lower_limits-CurrentTemperature)));
+      REQUIRE(checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(upper_limits+CurrentTemperature)));
     }
   }
 }
