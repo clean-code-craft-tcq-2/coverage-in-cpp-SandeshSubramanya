@@ -5,7 +5,6 @@ typedef enum {
   PASSIVE_COOLING,
   HI_ACTIVE_COOLING,
   MED_ACTIVE_COOLING,
-  NUM_OF_COOLINGTYPE
 } CoolingType;
 
 typedef enum {
@@ -21,6 +20,7 @@ BreachType classifyTemperatureBreach(CoolingType coolingType, double temperature
 typedef enum {
   TO_CONTROLLER,
   TO_EMAIL
+  NUM_ALTERTARGETS  // stores total number of alert targets.
 } AlertTarget;
 
 typedef struct {
@@ -48,7 +48,6 @@ static std::vector<stCoolingTypeInfo> oVectorCoolingTypeInfo {
     stCoolingTypeInfo(CoolingType::HI_ACTIVE_COOLING,0,45),
     stCoolingTypeInfo(CoolingType::MED_ACTIVE_COOLING,0,40),
 };
-
 
 //functions
 void checkAndAlert(AlertTarget alertTarget, BatteryCharacter batteryChar, double temperatureInC);
