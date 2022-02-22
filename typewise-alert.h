@@ -20,7 +20,6 @@ BreachType classifyTemperatureBreach(CoolingType coolingType, double temperature
 typedef enum {
   TO_CONTROLLER,
   TO_EMAIL,
-  NUM_ALTERTARGETS  // stores total number of alert targets.
 } AlertTarget;
 
 typedef struct {
