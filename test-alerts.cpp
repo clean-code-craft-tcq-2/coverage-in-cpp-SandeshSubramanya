@@ -59,6 +59,7 @@ TEST_CASE("Test checkAndAlert functionality for various target types and cooling
       oCurrentBatteryCharacter.brand = "Nissan";
       REQUIRE(classifyTemperatureBreach(oCurrentAlertTarget,oCurrentBatteryCharacter,(lower_limits-CurrentTemperature)) == TOO_LOW );
       REQUIRE(classifyTemperatureBreach(oCurrentAlertTarget,oCurrentBatteryCharacter,(upper_limits+CurrentTemperature)) == TOO_HIGH);
+    }
   }
 }
 
