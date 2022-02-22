@@ -59,9 +59,10 @@ TEST_CASE("Test checkAndAlert functionality for various target types and cooling
       int upper_limits = oVectorCoolingTypeInfo[icount].m_upperLimit; 
       BatteryCharacter oCurrentBatteryCharacter;
       oCurrentBatteryCharacter.coolingType = oCurrentCoolingType;
-      oCurrentBatteryCharacter.brand[] = "Nissan";
-      checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(lower_limits-CurrentTemperature)));
-      checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(upper_limits+CurrentTemperature)));
+      char brandName[45] ="Nissan";
+      oCurrentBatteryCharacter.brand = brandName;
+      checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(lower_limits-CurrentTemperature));
+      checkAndAlert(oCurrentAlertTarget,oCurrentBatteryCharacter,(upper_limits+CurrentTemperature));
     }
   }
 }
