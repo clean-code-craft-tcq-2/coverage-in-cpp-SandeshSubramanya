@@ -17,7 +17,7 @@ TEST_CASE("Test infers breach accordingly to the limits")
 
 TEST_CASE("Test infers breach according to the limits set to corresponding CoolingType") 
 {  
-  for (int count=0 ; count < oVectorCoolingTypeInfo.size(); ++count)
+  for (int count=0 ; count < (int)oVectorCoolingTypeInfo.size(); ++count)
   {
     int lower_limits = oVectorCoolingTypeInfo[count].m_lowerLimit;
     int upper_limits = oVectorCoolingTypeInfo[count].m_upperLimit; 
@@ -29,14 +29,14 @@ TEST_CASE("Test infers breach according to the limits set to corresponding Cooli
 
 TEST_CASE("Test classifyTemperatureBreach for various cooling type defined limits ") 
 {  
-  int CurrentTemperature = 15; //degrees
-  for (int count=0 ; count < oVectorCoolingTypeInfo.size(); ++count)
+  int CurrentTemperature = 15;
+  for (int icount=0 ; icount < (int)oVectorCoolingTypeInfo.size(); ++count)
   {
-    CoolingType oCurrentCoolingType = oVectorCoolingTypeInfo[count].m_coolingType;
-    int lower_limits = oVectorCoolingTypeInfo[count].m_lowerLimit;
-    int upper_limits = oVectorCoolingTypeInfo[count].m_upperLimit; 
-    REQUIRE(classifyTemperatureBreach(oCurrentCoolingType, (lower_limits-CurrentTemperature)) == TOO_LOW );
-    REQUIRE(classifyTemperatureBreach(oCurrentCoolingType, (upper_limits+CurrentTemperature)) == TOO_HIGH);
+    CoolingType oCurrentCoolingType = oVectorCoolingTypeInfo[icount].m_coolingType;
+    int lower_limits = oVectorCoolingTypeInfo[icount].m_lowerLimit;
+    int upper_limits = oVectorCoolingTypeInfo[icount].m_upperLimit; 
+    REQUIRE(classifyTemperatureBreach(oCurrentCoolingType,(lower_limits-CurrentTemperature)) == TOO_LOW );
+    REQUIRE(classifyTemperatureBreach(oCurrentCoolingType,(upper_limits+CurrentTemperature)) == TOO_HIGH);
     if (CurrentTemperature <= (upper_limits-lower_limits))
     {
       REQUIRE(classifyTemperatureBreach(oCurrentCoolingType, CurrentTemperature)) == NORMAL);
